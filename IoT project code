@@ -1,0 +1,75 @@
+import urllib2
+import csv
+import time
+
+GoogleSheetsURL = 'https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key={key}&exportFormat=csv'
+
+
+#Retrieves data from dict of urls & places CSV data into corresponding dict
+def getCSVData(urls):
+	csvData = {}
+	for urlName in urls.keys():
+		csvData[urlName] = csv.reader(urllib2.urlopen(GoogleSheetsURL.replace('{key}',urls[urlName])))
+
+	return csvData
+
+#Retrieves data from dict of urls & places CSV data into the specified file
+def writeCSVData(urls, fileURIs):
+	csvData = {}
+	for urlName in urls.keys():
+		with open(fileURIs[urlName],'w') as file:
+			file.write(urllib2.urlopen(GoogleSheetsURL.replace('{key}',urls[urlName])).read())
+
+
+def readCSVFile(file):
+	with open(file,'r') as file:
+		return csv.reader(file)
+
+def output():
+	CSVData = getCSVData(DocumentKeys)
+	list_data = list(CSVData['Wireless_Door_Lab'])
+	list_data.reverse()
+
+	#print list_data
+	closeddoor=0
+	opendoor=0
+
+	for event in list_data:
+		if event[0] == "Closed":
+			closeddoor=closeddoor+1
+		if event[0] == "Open":
+			opendoor=opendoor+1
+
+	file=open("output1.txt","a")
+	file.write("Open door:"+str(opendoor)+" Closed door:"+str(closeddoor)+"\n")
+	file.close()
+		#print(event[0])
+		#print(event[1])
+		#while(event[1].split(',')[0]=='November 01'):
+		#	if event[0] == "Closed":
+		#		closeddoor=closeddoor+1
+		#	if event[0] == "Open":
+		#		opendoor=opendoor+1
+	#print("Closed Door: "+str(closeddoor)+" Open Door"+str(opendoor))
+			#entry = event
+			#	if (entry[0]=="Closed"):
+ 			#break;
+
+	#print entry
+	#writeCSVData(DocumentKeys,{'Wireless_Door_Lab':'testwireless.csv'})
+
+
+
+
+
+#Example usage, downloads and prints data for the Wireless Door Lab
+#Dictionary of google sheets export urls
+DocumentKeys = {
+	'Wireless_Door_Lab':'147Gf1f3z-r1weIikSwSSd741baTqqqRkc06716gF09c'
+	# ,'Presence':'1MAg21Z2H01UHSK1WiAzxfcqziD-CYvMnpafM_XPXwMs'
+}
+
+if _name_ == '_main_':
+	while 1:
+		output()
+		time.sleep(20)
