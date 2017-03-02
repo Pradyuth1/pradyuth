@@ -1,0 +1,26 @@
+clc;
+clear all;
+x(1)=5; %Initialisation
+x(2)=10;
+x(3)=15;
+O=5
+for i=0:100
+    T1=(-x(1))*exp((-x(1))/5) %Function definition
+    T2=(-x(2))*exp((-x(2))/5)
+    T3=(-x(3))*exp((-x(3))/5)
+    T=[T1;T2;T3] %3X1 matrix
+    m=[x(1)^2,x(1),1;x(2)^2,x(2),1;x(3)^2,x(3),1] %3X3 matrix
+    F=inv(m) %Inverse of the matrix
+    P=F*T %Matrix multiplication
+    R=-P(2)/(2*P(1)) %Finding out the minimum
+    O=O/2;
+    if O<0.0001 %If condition statement
+        break
+    end
+    x(1)=R-O;
+    x(2)=R;
+    x(3)=R+O;
+    Function_value=(-R)*exp((-R)/5)
+end
+disp(['The value at which the function is minimum is: ' num2str(R)])
+disp(['The minimum function value is: ' num2str(Function_value)])
