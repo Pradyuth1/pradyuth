@@ -1,0 +1,13 @@
+clc;
+clear all;
+a=1;
+n=int16(80-0)+1 %Counting the numbers
+for i=0:10
+    x=0:a:80;
+    T=(-x).*exp((-x)./5); %function
+    if T(1,n)>T(1,n-1) %Condition
+        a=a/2
+    end
+end
+T(1,n)
+disp(['The minimum value of function is :' num2str(T(1,n))])
