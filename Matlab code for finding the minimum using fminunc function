@@ -1,0 +1,11 @@
+clc;
+clear all;
+syms x
+T=(-x)*exp((-x)/5) %Function definition
+S=matlabFunction(T,'Vars',x) %Matlab function converting the symbolic function to numerical function
+x0=0;
+P=@(x)S(x) 
+R=fminunc(P,x0) %calling the minimum function
+T=(-R)*exp((-R)/5) %function value
+disp(['The minimum value of function is: ' num2str(T)])
+disp(['The value at which the function is minimum is: ' num2str(R)])
