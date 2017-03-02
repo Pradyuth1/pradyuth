@@ -1,0 +1,12 @@
+clc;
+clear all;
+syms x
+T=(-x)*exp((-x)/5) %Function definition
+R=diff(T,1) %Derivative
+S=matlabFunction(R,'Vars',x) %Matlab function
+F=@(x)S(x)
+x0=[-5] %Initialisation
+X=fzero(F,x0) %Finding the minimum value of the function
+U=(-X)*exp((-X)/5)
+disp(['The minimum value of the function is: ' num2str(U)])
+disp(['The value is minimum at: ' num2str(X)])
