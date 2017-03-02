@@ -1,0 +1,10 @@
+clc;
+clear all;
+a=-10;
+b=10;
+x=-b+(b-a)*rand(500,1); %generating random variables
+T=(-x).*exp((-x)./5); %substituing them in the function
+[m,Y]=min(T) %Finding the minimum of the function
+x(Y) %Value where the function is minimum
+disp(['The minimum value of function is: ' num2str(m)])
+disp(['The value at which function is minimum is: ' num2str(x(Y))])
